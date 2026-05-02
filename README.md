@@ -1,30 +1,31 @@
 # kicad-netlist-to-json
 
-Конвертер KiCad netlist (`.net`) файлов в JSON формат.
+[![npm version](https://img.shields.io/npm/v/kicad-netlist-to-json.svg)](https://www.npmjs.com/package/kicad-netlist-to-json)
+[![npm downloads](https://img.shields.io/npm/dm/kicad-netlist-to-json.svg)](https://www.npmjs.com/package/kicad-netlist-to-json)
+[![license](https://img.shields.io/npm/l/kicad-netlist-to-json.svg)](LICENSE)
 
-## Использование
+Convert KiCad netlist (`.net`) files to JSON format. Works as a library, CLI tool, or web service.
 
-### Веб-интерфейс
+## Quick Start
 
-Самый простой способ — использовать онлайн-версию на сайте: **[kicad-netlist-to-json.vercel.app](https://kicad-netlist-to-json.vercel.app)**
+### Web Interface
 
-Просто загрузите ваш `.net` файл и получите JSON.
+Use the online version at: **[kicad-netlist-to-json.vercel.app](https://kicad-netlist-to-json.vercel.app)**
 
-### Локальный запуск
+Simply upload your `.net` file and get JSON output.
 
-Вот краткая инструкция по запуску `kicad-netlist-to-json` на вашем компьютере:
+### Local Usage
 
-**1. Установите Node.js** (если ещё не установлен) — скачайте с [nodejs.org](https://nodejs.org).
+**1. Install Node.js** (if not already) — get it from [nodejs.org](https://nodejs.org)
 
-**2. Создайте папку для проекта** и откройте в ней терминал.
+**2. Create a folder** and open terminal there.
 
-**3. Установите пакет:**
+**3. Install the package:**
 ```bash
 npm install kicad-netlist-to-json
 ```
 
-**4. Создайте файл `convert.js`** со следующим кодом:
-
+**4. Create `convert.js`:**
 ```javascript
 const fs = require('fs');
 const kicadNetlistToJson = require('kicad-netlist-to-json');
@@ -36,27 +37,25 @@ const netlistContent = fs.readFileSync(netlistPath, { encoding: 'utf8' });
 const jsonResult = kicadNetlistToJson(netlistContent);
 
 fs.writeFileSync(jsonOutputPath, JSON.stringify(jsonResult, null, 2));
-console.log(`Готово! JSON сохранён в ${jsonOutputPath}`);
+console.log(`Done! JSON saved to ${jsonOutputPath}`);
 ```
 
-**5. Положите ваш `.net` файл** в папку проекта (или укажите полный путь в `netlistPath`).
+**5. Put your `.net` file** in the project folder (or update `netlistPath` with full path).
 
-**6. Запустите скрипт:**
+**6. Run:**
 ```bash
 node convert.js
 ```
 
-Готово. JSON-файл с данными netlist появится в указанном месте.
+JSON file will appear at the specified location.
 
-## CLI
-
-Также можно использовать как команду в терминале:
+### CLI
 
 ```bash
 npx kicad-netlist-to-json your-netlist.net > output.json
 ```
 
-## API
+### API
 
 ```javascript
 const kicadNetlistToJson = require('kicad-netlist-to-json');
@@ -65,6 +64,6 @@ const json = kicadNetlistToJson(netlistString);
 // Returns: { components: [...], nets: [...] }
 ```
 
-## Лицензия
+## License
 
 GPLv3
