@@ -1,7 +1,7 @@
 {
   "name": "kicad-netlist-to-json",
   "version": "0.0.9",
-  "description": "KiCad netlist (.net) to JSON converter",
+  "description": "KiCad netlist (.net) to JSON online converter",
   "keywords": [
     "kicad",
     "netlist",
@@ -23,6 +23,9 @@
     "is-js": "^0.1.1",
     "ramda": "^0.13.0",
     "s-expression": "^3.0.1"
+  },
+  "devDependencies": {
+    "next": "16.2.4"
   },
   "scripts": {
     "test": "test/test.js"

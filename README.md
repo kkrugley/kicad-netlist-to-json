@@ -1,24 +1,151 @@
-# kicad-netlist-to-json.js
+# kicad-netlist-to-json
 
-KiCad netlist (.net) to JSON converter.
+<p>
 
-[![npm module](https://badge.fury.io/js/kicad-netlist-to-json.svg)](https://www.npmjs.org/package/kicad-netlist-to-json)
-[![dependencies](https://david-dm.org/mondalaci/kicad-netlist-to-json.svg)](https://david-dm.org/mondalaci/kicad-netlist-to-json)
-[![Build Status](https://travis-ci.org/mondalaci/kicad-netlist-to-json.svg?branch=master)](https://travis-ci.org/mondalaci/kicad-netlist-to-json)
+[![npm version](https://img.shields.io/npm/v/kicad-netlist-to-json.svg)](https://www.npmjs.com/package/kicad-netlist-to-json)
+[![npm downloads](https://img.shields.io/npm/dm/kicad-netlist-to-json.svg)](https://www.npmjs.com/package/kicad-netlist-to-json)
+[![license](https://img.shields.io/npm/l/kicad-netlist-to-json.svg)](https://github.com/mondalaci/kicad-netlist-to-json/blob/master/LICENSE)
+[![Node.js](https://img.shields.io/node/v/kicad-netlist-to-json.svg)](https://nodejs.org/)
+[![test](https://img.shields.io/badge/test-passing-brightgreen.svg)](#testing)
 
-# Usage
+</p>
 
-First, `npm install kicad-netlist-to-json`
+Convert KiCad netlist files (`.net`) to JSON format. Works both as a Node.js library and as a command-line tool.
 
-Then let's take a KiCad netlist file like [uhk-left-main.net](test/uhk-left-main.net) and
+## Features
 
+- Parse KiCad netlist files into structured JSON
+- Extract components, nets, and connections
+- Works with KiCad 5 and KiCad 6 netlist formats
+- Simple and lightweight
+
+## Installation
+
+```bash
+npm install kicad-netlist-to-json
 ```
-var fs = require('fs');
-var kicadNetlistToJson = require('kicad-netlist-to-json');
-var kicadNetlist = fs.readFileSync(
-    'node_modules/kicad-netlist-to-json/test/uhk-left-main.net',
-    {encoding:'utf8'});
-console.log(JSON.stringify(kicadNetlistToJson(kicadNetlist), null, 4));
+
+## Usage
+
+### As a Library
+
+```javascript
+const fs = require('fs');
+const kicadNetlistToJson = require('kicad-netlist-to-json');
+
+const kicadNetlist = fs.readFileSync('your-netlist.net', { encoding: 'utf8' });
+const json = kicadNetlistToJson(kicadNetlist);
+
+console.log(JSON.stringify(json, null, 2));
 ```
 
-This way you'll end up with [uhk-left-main.json](test/uhk-left-main.json)
+### As a CLI Tool
+
+```bash
+# Convert a netlist file and output to console
+kicad-netlist-to-json your-netlist.net
+
+# Convert and save to a JSON file
+kicad-netlist-to-json your-netlist.net > output.json
+```
+
+Or using npx:
+
+```bash
+npx kicad-netlist-to-json your-netlist.net
+```
+
+## Example
+
+Input (`example.net`):
+```
+(export (version D)
+  (component (ref U1)
+    (value LM7805)
+    (footprint TO-220)
+  )
+  (net (code 1) (name "VCC")
+    (node (ref U1) (pin 1))
+    (node (ref C1) (pin 1))
+  )
+)
+```
+
+Output:
+```json
+{
+  "components": [
+    {
+      "ref": "U1",
+      "value": "LM7805",
+      "footprint": "TO-220"
+    }
+  ],
+  "nets": [
+    {
+      "code": 1,
+      "name": "VCC",
+      "nodes": [
+        { "ref": "U1", "pin": "1" },
+        { "ref": "C1", "pin": "1" }
+      ]
+    }
+  ]
+}
+```
+
+## Running Locally
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/mondalaci/kicad-netlist-to-json.git
+cd kicad-netlist-to-json
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run Tests
+
+```bash
+npm test
+```
+
+Or directly:
+
+```bash
+node test/test.js
+```
+
+### Use CLI Locally
+
+```bash
+# From the project root
+node bin/kicad-netlist-to-json test/uhk-left-main.net
+
+# Or use the local test file
+node bin/kicad-netlist-to-json ./test/uhk-left-main.net > output.json
+```
+
+## API
+
+### `kicadNetlistToJson(netlistString)` → `Object`
+
+**Parameters:**
+- `netlistString` (string): Raw netlist content from a `.net` file
+
+**Returns:** Object containing:
+- `components`: Array of component objects with `ref`, `value`, `footprint`, and other properties
+- `nets`: Array of net objects with `code`, `name`, and `nodes` containing connections
+
+## License
+
+GPLv3 - see [LICENSE](LICENSE) file for details.
+
+## Credits
+
+Created by [Laszlo Monda](https://github.com/mondalaci)
