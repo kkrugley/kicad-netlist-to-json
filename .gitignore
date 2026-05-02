@@ -36,3 +36,13 @@ coverage/
 
 # Misc
 *.tsbuildinfo
+
+# AI / Editor configs
+opencode.json
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Vercel
+.vercel
